@@ -24,21 +24,32 @@ export default class AppClass extends React.Component {
   OnSubmit = (e) => {
     e.preventDefault();
     const payLoad = { email: this.state.email };
-    axios
-      .post("http://localhost:9000/api/result", payLoad)
-      .then((res) => {
-        this.setState({
-          ...this.state,
-          form: res.data.email,
-        });
-      })
-      .catch((err) => {
-        const apiErr = err.response.data.message;
-        this.setState({
-          ...this.state,
-          error: apiErr,
-        });
+    axios.post("http://localhost:9000/api/result", payLoad).then((res) => {
+      this.setState({
+        ...this.state,
+        form: res.data.email,
       });
+    });
+  };
+  handleReset = () => {
+    this.setState({
+      ...this.state,
+      form: [
+        {
+          x: 2,
+          y: 2,
+          steps: 0,
+        },
+      ],
+      email: "",
+      error: "",
+    }).catch((err) => {
+      const apiErr = err.response.data.message;
+      this.setState({
+        ...this.state,
+        error: apiErr,
+      });
+    });
   };
   render() {
     const { className } = this.props;
